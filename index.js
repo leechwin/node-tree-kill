@@ -65,7 +65,18 @@ function killAll (tree, signal, callback) {
 
 function killPid(pid, signal) {
     try {
-        process.kill(parseInt(pid, 10), signal);
+        // process.kill(parseInt(pid, 10), signal);
+
+        /*
+         * @author: leechwin1@gmail.com
+         * Modified with the kill command to terminate the root process.
+         */
+        var cmd = 'sudo kill -s ' + signal + ' ' + pid;
+        exec(cmd, function(err, stdout, stderr) {
+            if (err) {
+                return;
+            }
+        });
     }
     catch (err) {
         if (err.code !== 'ESRCH') throw err;
